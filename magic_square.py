@@ -80,3 +80,32 @@ class Solution(object):
                 for c in range(COLS - 2):
                     res += magic(r,c)
     return res
+#3rd approach
+class Solution:
+    def numMagicSquaresInside(self, grid):
+        ROWS, COLS = len(grid), len(grid[0])
+        res = 0
+        pattern1 = "438167294381672"
+        pattern2 = "927618349276183"
+
+        def magic(r, c):
+            if grid[r][c] != 5:
+                return 0
+            neighbors = [
+                [r-1, c], [r-1, c+1],
+                [r, c+1], [r+1, c+1],
+                [r+1, c], [r+1, c-1],
+                [r, c-1], [r-1, c-1]
+            ]
+            seq = ""
+            for nr, nc in neighbors:
+                seq += str(grid[nr][nc])
+            if seq in pattern1 or seq in pattern2:
+                return 1
+            return 0
+
+        for r in range(1, ROWS - 1):
+            for c in range(1, COLS - 1):
+                res += magic(r, c)
+        return res
+
